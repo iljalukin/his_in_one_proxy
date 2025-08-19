@@ -246,11 +246,10 @@ class Conductor
      */
     protected function readDetailsForOrgUnits($unit, $unit_id_list)
     {
-        $org_units = array();
         foreach ($unit_id_list->getUnitIdContainer() as $module_unit_id) {
             $module = DataCache::getInstance()->getCourseInterfaceService()->readUnit($module_unit_id);
             if ($module->getId() != null) {
-                $org_units[] = $this->getOrgUnitDetails($module);
+                $unit->setModules($module);
             }
         }
     }

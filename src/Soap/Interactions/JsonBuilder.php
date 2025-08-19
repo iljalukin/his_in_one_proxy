@@ -200,6 +200,7 @@ class JsonBuilder
         $row->degreeProgrammes    = self::addDegreeProgrammes($unit);
         $row->organisationalUnits = self::addOrgUnits($unit->getOrgUnitsContainer());
         $row->targetAudiences     = self::addTargetAudience($unit);
+        $row->modules             = self::appendModules($unit);
         self::appendGroups($unit, $row, $course_id);
         self::buildMembers();
     }
@@ -553,5 +554,35 @@ class JsonBuilder
     {
         $tempArray = array_unique(array_column($array, $property));
         return array_values(array_intersect_key($array, $tempArray));
+    }
+
+    /**
+     * @param Unit $unit
+     * @return array
+     */
+    public static function appendModules($unit)
+    {
+        $array = array();
+
+        if (!empty($unit->getModules()) && count($unit->getModules()) > 0) {
+            foreach ($unit->getModules() as $module) {
+                $mod = new \StdClass();
+                $mod->default_text = $module->getDefaultText();
+                $mod->short_text   = $module->getShortText();
+
+                $mod->title = $module->getShortText() .' '. $module->getDefaultText();
+
+                if (count($array) > 0) {
+                    foreach ($array as $curr_mod) {
+                        if (($curr_mod->short_text === $mod->short_text) || ($curr_mod->default_text === $mod->default_text)) {
+                            continue 2;
+                        }
+                    }
+                }
+
+                $array[] = $mod;
+            }
+        }
+        return $array;
     }
 }
