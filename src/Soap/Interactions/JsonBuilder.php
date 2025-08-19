@@ -239,7 +239,8 @@ class JsonBuilder
             }
         }
 
-        return $programs;
+        $unique_programs = self::removeDuplicatesByProperty($programs, 'title');
+        return $unique_programs;
     }
 
     /**
@@ -534,5 +535,16 @@ class JsonBuilder
             }
         }
         return $nodes;
+    }
+
+    /**
+     * @param array $array
+     * @param string $property
+     * @return array
+     */
+    public static function removeDuplicatesByProperty($array, $property)
+    {
+        $tempArray = array_unique(array_column($array, $property));
+        return array_values(array_intersect_key($array, $tempArray));
     }
 }
