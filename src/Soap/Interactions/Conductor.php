@@ -135,7 +135,7 @@ class Conductor
                 $this->log->warning(sprintf('No catalog leaf found for term id %s.', $term_id));
             }
         } else {
-            $this->log->warning(sprintf('No term id found for year %s and term type value id.', $year, $term_type_value_id));
+            $this->log->warning(sprintf('No term id found for year %s and term type value id %s.', $year, $term_type_value_id));
         }
         return $catalog_leaf;
     }
@@ -164,7 +164,7 @@ class Conductor
             $this->log->info(sprintf('Unit relevant for export %s. Unit irrelevant for export %s',
                 $services->getRelevantForExport(), $services->getIrRelevantForExport()));
         } else {
-            $this->log->warning(sprintf('No unit ids found for year %s and term type value id.', $year, $term_type_value_id));
+            $this->log->warning(sprintf('No unit ids found for year %s and term type value id %s.', $year, $term_type_value_id));
         }
     }
 
@@ -185,6 +185,15 @@ class Conductor
             if (DataCache::getInstance()->getCourseInterfaceService()->doesCombinationForCourseExist($unit_id, $term_type_value_id, $year)) {
                 $unit = $this->gatherUnitDetails($unit_id, $cos_map, $cos_already);
                 if ($unit != null) {
+                    $orgUnits = $unit->getOrgUnitsContainer();
+                    foreach ($orgUnits as $orgUnit) {
+                        if (in_array($orgUnit->getLid(), GlobalSettings::getInstance()->getBlockedOrgUnits())) {
+                            DataCache::getInstance()->getLog()->debug(sprintf('OrgUnit with name (%s) will be ignored, since it is not active, blocked id(%s)!', DataCache::getInstance()->resolveOrgUnitByLid($orgUnit->getLid())->getLongText(), $orgUnit->getLid()));
+                            DataCache::getInstance()->incrementIrrelevantForExport();
+                            continue 2;
+                        }
+                    }
+
                     $units[] = $unit;
                 }
             } else {

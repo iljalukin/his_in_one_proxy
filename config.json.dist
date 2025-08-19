@@ -19,6 +19,7 @@
 		"login_suffix" : "",
 		"blocked_ids" : [],
 		"blocked_form_of_studies_ids" : [],
+		"blocked_org_units" : [],
 		"text" : {
 			"current_term" : "getDefaultText",
 			"event_type"   : "getDefaultText",

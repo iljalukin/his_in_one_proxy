@@ -25,6 +25,11 @@ class ParseAccounts extends SimpleXmlParser
                 }
             } else {
                 $container[] = $this->buildObject($xml->completeAccount60);
+                if (isset($xml->completeAccount60)) {
+                    $container[] = $this->buildObject($xml->completeAccount60);
+                } else {
+                    $this->log->debug("missing completeAccount60 attribute");
+                }
             }
         }
         return $container;

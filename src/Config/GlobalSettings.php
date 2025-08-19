@@ -164,6 +164,11 @@ class GlobalSettings
     /**
      * @var array
      */
+    protected $blocked_org_units = array();
+
+    /**
+     * @var array
+     */
     protected $text_config = array();
 
     /**
@@ -216,6 +221,7 @@ class GlobalSettings
         $this->setLoginSuffix($this->config->get('HIS.login_suffix'));
         $this->setBlockedIds($this->config->get('HIS.blocked_ids'));
         $this->setBlockedFormOfStudiesIds($this->config->get('HIS.blocked_form_of_studies_ids'));
+        $this->setBlockedOrgUnits($this->config->get('HIS.blocked_org_units'));
         $this->setTextConfig($this->config->get('HIS.text'));
 
         $this->setHisRegisterListener($this->config->get('HIS.endpoint.register_listener'));
@@ -299,6 +305,7 @@ class GlobalSettings
             "HIS.actual_term_year"           => $this->getActualTermYear(),
             "HIS.blocked_ids"                => $this->getBlockedIds(),
             "HIS.blocked_form_of_studies_ids"=> $this->getBlockedFormOfStudiesIds(),
+            "HIS.blocked_org_units"          => $this->getBlockedOrgUnits(),
             "HIS.text"                       => $this->getTextConfig(),
             "ECS.auth_id"                    => $this->getEcsAuthId(),
             "ECS.password"                   => $this->getEcsPassword(),
@@ -522,6 +529,22 @@ class GlobalSettings
     public function setBlockedFormOfStudiesIds($blocked_form_of_studies_ids)
     {
         $this->blocked_form_of_studies_ids = $blocked_form_of_studies_ids;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBlockedOrgUnits()
+    {
+        return $this->blocked_org_units;
+    }
+
+    /**
+     * @param array $blocked_org_units
+     */
+    public function setBlockedOrgUnits($blocked_org_units)
+    {
+        $this->blocked_org_units = $blocked_org_units;
     }
 
     /**
