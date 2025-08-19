@@ -301,10 +301,9 @@ class JsonBuilder
             self::analysePersonContainer($element, $unit->getId(), $course_id);
             $group                  = new stdClass();
             $group->id              = $element->getId();
-            $group->title           = DataCache::getInstance()
-                                               ->getParallelGroupValues()
-                                               ->getGroupValueById($element->getParallelGroupId())
-                                               ->getLongText();
+            $group->title			= $element->getDefaultText() . ' (' . DataCache::getInstance()
+                                        ->getParallelGroupValues()
+                                        ->getGroupValueById($element->getParallelGroupId())->getShortText() . ')';
             $group->maxParticipants = $element->getAttendeeMaximum();
             $group->hours           = $element->getHoursPerWeek();
             if (array_key_exists($course_id, self::$course_lectures) && array_key_exists($element->getId(), self::$course_lectures[$course_id])) {
