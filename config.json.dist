@@ -18,6 +18,7 @@
 		"person_id_type" : "ecs_loginUID",
 		"login_suffix" : "",
 		"blocked_ids" : [],
+		"blocked_form_of_studies_ids" : [],
 		"text" : {
 			"current_term" : "getDefaultText",
 			"event_type"   : "getDefaultText",
