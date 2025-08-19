@@ -123,7 +123,7 @@ class JsonBuilder
         $row->elearning_sys_string = '';
         if (count($mapping) > 0) {
             $row->term_type     = $mapping[0]->getTermTypeValueId();
-            $row->term          = $mapping[0]->getYear();
+            $row->term_year     = $mapping[0]->getYear();
             $row->groupScenario = HisToEcsCourseIdMapping::getEcsCourseIdFromCourseHisId($mapping[0]->getCourseMappingTypeId());
 
             foreach ($mapping as $map) {
@@ -166,7 +166,7 @@ class JsonBuilder
         $row->status                = $unit->getStatusId();
         $row->study_courses         = $unit->getLid();
         if (array_key_exists('term_type', $row)) {
-            $row->termID = DataCache::getInstance()->getTermTypeForId($row->term_type) . ' ' . $row->term;
+            $row->term = DataCache::getInstance()->getTermTypeForId($row->term_type) . ' ' . $row->term_year;
         }
         $row->lectureType  = DataCache::getInstance()->resolveEventTypeById($event_type_id);
         $plan_element_cont = $unit->getPlanElementContainer();
