@@ -248,7 +248,7 @@ class Conductor
     {
         foreach ($unit_id_list->getUnitIdContainer() as $module_unit_id) {
             $module = DataCache::getInstance()->getCourseInterfaceService()->readUnit($module_unit_id);
-            if ($module->getId() != null) {
+            if (isset($module) && $module->getId() != null) {
                 $unit->setModules($module);
             }
         }
