@@ -62,6 +62,8 @@ class Unit
      */
     protected $course_of_studies;
 
+    protected $modules;
+
     /**
      * @return string
      */
@@ -275,6 +277,22 @@ class Unit
     public function setCourseOfStudies($course_of_studies)
     {
         $this->course_of_studies = $course_of_studies;
+    }
+
+    /**
+     * @return CourseOfStudy[]
+     */
+    public function getModules()
+    {
+        return $this->modules;
+    }
+
+    /**
+     * @param CourseOfStudy[] $modules
+     */
+    public function setModules($module)
+    {
+        $this->modules[] = $module;
     }
 
 }

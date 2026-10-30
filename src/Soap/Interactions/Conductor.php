@@ -242,7 +242,7 @@ class Conductor
         foreach ($unit_id_list->getUnitIdContainer() as $module_unit_id) {
             $module = DataCache::getInstance()->getCourseInterfaceService()->readUnit($module_unit_id);
             if (isset($module) && $module->getId() != null) {
-                $org_units[] = $this->getOrgUnitDetails($module);
+                $unit->setModules($module);
             }
         }
     }
